@@ -1,17 +1,14 @@
-
+from dataclasses import make_dataclass
 class PolyMethod:
     def __init__(self, name='<lambda>'):
         self.impl = {}
         self.inst = None
         self.cls = None
         self.name = name
-        self.empty = True
-        self._init_cls = False
 
     def __get__(self, instance, cls):
         self.inst = instance
         self.cls = cls
-        self._init_cls = True
         return self
 
     def _parse_args(self, args):
@@ -30,11 +27,6 @@ class PolyMethod:
         func = self._get_callable(func)
         key = self._parse_func(func, state)
         self.impl[key] = func
-        if self.empty:
-            self.empty = False
-            self.__call__.__func__.__name__ = func.__name__
-            self.__call__.__func__.__annotations__ = func.__annotations__
-            self.__call__.__func__.__doc__ = func.__doc__
 
     def get(self, key):
         try:
@@ -115,20 +107,11 @@ class OverLoadBase:
         self.base.add_impl(func)
         return self
 
+OverLoadCount = type("OverLoadCount", (OverLoasdBase,), {"polyMethod":PolyMethodCount})
+OverLoadType = type("OverLoadType", (OverLoasdBase,), {"polyMethod":PolyMethodType})
+OverLoadTypeCount = type("OverLoadTypeCount", (OverLoasdBase,), {"polyMethod":PolyMethodTypeCount})
 
-class OverLoadCount(OverLoadBase):
-    polyMethod = PolyMethodCount
-
-
-class OverLoadType(OverLoadBase):
-    polyMethod = PolyMethodType
-
-
-class OverLoadTypeCount(OverLoadBase):
-    polyMethod = PolyMethodTypeCount
-
-
-MethodBase = type("MethodBase", tuple(), {"__init__": (lambda self, func: setattr(self, "func", func))})
+MethodBase = make_dataclass("MethodBase", ["func"])
 MethodType = type("MethodType", (MethodBase,), {})
 MethodCount = type("MethodCount", (MethodBase,), {})
 MethodTypeCount = type("MethodTypeCount", (MethodBase,), {})
