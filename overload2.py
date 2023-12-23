@@ -92,7 +92,6 @@ class PolyMethodTypeCount(PolyMethod):
             else:
                 return v
 
-
 class OverLoadBase:
     polyMethod = PolyMethod
 
@@ -107,9 +106,9 @@ class OverLoadBase:
         self.base.add_impl(func)
         return self
 
-OverLoadCount = type("OverLoadCount", (OverLoasdBase,), {"polyMethod":PolyMethodCount})
-OverLoadType = type("OverLoadType", (OverLoasdBase,), {"polyMethod":PolyMethodType})
-OverLoadTypeCount = type("OverLoadTypeCount", (OverLoasdBase,), {"polyMethod":PolyMethodTypeCount})
+OverLoadCount = type("OverLoadCount", (OverLoadBase,), {"polyMethod":PolyMethodCount})
+OverLoadType = type("OverLoadType", (OverLoadBase,), {"polyMethod":PolyMethodType})
+OverLoadTypeCount = type("OverLoadTypeCount", (OverLoadBase,), {"polyMethod":PolyMethodTypeCount})
 
 MethodBase = make_dataclass("MethodBase", ["func"])
 MethodType = type("MethodType", (MethodBase,), {})
@@ -141,3 +140,5 @@ class MetaOverLoadMulti(type):
     @classmethod
     def __prepare__(metacls, name, bases, **kwds):
         return PolyDictMulti()
+
+class BaseOverLoadMulti(metaclass=MetaOverLoadMulti): pass
