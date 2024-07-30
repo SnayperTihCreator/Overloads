@@ -14,7 +14,8 @@ OverLoadTypeMro - декоратор перегрузки кол-во и тип�
 <br/><hr/><h3>
 Пример перегрузки функций:
 </h3><br/>
-<code lang="python"><pre>@OverLoadCount
+<code lang="Python"><pre>
+@OverLoadCount
 def foo(a):
   print(1)
 @foo.registry
