@@ -14,16 +14,18 @@ OverLoadTypeMro - декоратор перегрузки типов аргум�
 <br/><hr/><h3>
 Пример перегрузки функций:
 </h3><br/>
-<code lang="Python"><pre>
+
+```python
 @OverLoadCount
 def foo(a):
   print(1)
 @foo.registry
 def foo(b):
   print(2)
-
-&gt;&gt;&gt; foo(5)
+```
+```bash
+>>> foo(5)
 1
-&gt;&gt;&gt; foo(5, 6)
-2</pre>
-</code>
+>>> foo(5, 6)
+2
+```
